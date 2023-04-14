@@ -7,9 +7,9 @@ services:
     container_name: backend
     restart: always
     expose:
-      - 3000
+      - 4600
     ports:
-      - 3000:3000
+      - 4600:4600
     volumes:
       - .:/appecomme/src/app
       - ./public/upload:/usr/src/app/public/upload
@@ -20,7 +20,7 @@ services:
     environment:
       - DATABASE_URL=postgres://user:password@postgres:5432/db_app_ecommerce
       - NODE_ENV=production
-      - PORT=3000
+      - PORT=4600
 
   reverse-proxy:
     build:

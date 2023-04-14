@@ -1,4 +1,4 @@
-version: '3.9'
+version: '1.2'
 services:
   backend:
     build:
@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - 3000:3000
+      - 4600:4600
     volumes:
       - .:/appecomme/src/app
     command: npm run start
@@ -15,7 +15,7 @@ services:
     # environment:
     #   DATABASE_URL: postgres://user:password@postgres:5432/db_app_ecommerce
     #   NODE_ENV: development
-    #   PORT: 3000
+    #   PORT: 4600
 
   # postgres:
   #   image: postgres:14.4
