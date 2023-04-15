@@ -7,12 +7,12 @@ async function bootstrap() {
   // configuration de Swagger
   const config = new DocumentBuilder()
     .setTitle('API e-commerce')
-    .setDescription('vente de produit sexuel divers')
+    .setDescription('vente de produit de tous type à caractère sexuel')
     .setVersion('1.0')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/api-ecommerce', app, document);
-  const server = await app.listen(process.env.PORT || 3000);
+  const server = await app.listen(process.env.PORT || 4600);
 }
 bootstrap();

@@ -16,19 +16,14 @@ import { PaymentModule } from './payment/payment.module';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      url:
-        process.env.NODE_ENV == 'production'
-          ? process.env.DATABASE_URL
-          : process.env.DATABASE_URLDEV,
+      type:"mysql",
+      host:"http://87.106.136.176",
+      port:3306,
+      username: 'starmint0',
+      password: 'Prezer225',
+      database:"start",
       autoLoadEntities: true,
-      synchronize: true,
-      ssl: process.env.NODE_ENV == 'production' ? false : true,
-      // extra: {
-      //   ssl: {
-      //     rejectUnauthorized: false,
-      //   },
-      // },
+      synchronize: true,      
     }),
 
     CategorieModule,
