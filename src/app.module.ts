@@ -18,7 +18,7 @@ import { PaymentModule } from './payment/payment.module';
     TypeOrmModule.forRoot({
       type:"mysql",
       host:"https://starmint-nft.com/",
-      port:3306,
+      //port:3306,
       username: 'starmint0',
       password: 'Prezer225',
       database:"start",
