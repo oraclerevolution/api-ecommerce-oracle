@@ -11,7 +11,6 @@ import { PictureModule } from './picture/picture.module';
 import { ColorsModule } from './colors/colors.module';
 import { ScentModule } from './scent/scent.module';
 import { PaymentModule } from './payment/payment.module';
-import { StoreInscriptionModule } from './store-inscription/store-inscription.module';
 
 @Module({
   imports: [
@@ -46,7 +45,6 @@ import { StoreInscriptionModule } from './store-inscription/store-inscription.mo
 
     PaymentModule,
 
-    StoreInscriptionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -49,8 +49,51 @@ export class StoreService {
     }
   }
 
+  async createStoreInscription(createStoreDto: CreateStoreDto): Promise<any> {
+    createStoreDto.password = await bcrypt.hash(createStoreDto.password, 10);
+    console.log(createStoreDto.password);
+    const newStore = this.storeRepository.create({
+      name: createStoreDto.name,
+      city: createStoreDto.city,
+      email: createStoreDto.email,
+      common: createStoreDto.common,
+      status: 0,
+      location: createStoreDto.location,
+      telephone_number: createStoreDto.telephone_number,
+      image: createStoreDto.image,
+      image_url: createStoreDto.image_url,
+      password: createStoreDto.password,
+    });
+    try {
+      const store = await this.storeRepository.save(newStore);
+      const token = await JwtUtils.assignJwtToken(store.id, this.jwtService);
+      return { store, token };
+    } catch (error) {
+      throw new ConflictException(error);
+    }
+  }
+
+  async validateStoreInscription(id:string): Promise<Store>{
+    const store = await this.storeRepository.findOne({
+      where:{
+        id
+      }
+    })
+    if(!store){
+      throw new NotFoundException('')
+    }
+
+    store.status = 1
+    await this.storeRepository.save(store)
+    return store
+  }
+
   async findAll(): Promise<Store[]> {
-    return await this.storeRepository.find();
+    return await this.storeRepository.find({
+      where: {
+        status: 1
+      }
+    });
   }
 
   async findOne(id: string): Promise<Store> {

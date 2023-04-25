@@ -80,6 +80,49 @@ export class StoreController {
     return this.storeService.create(createStoreDto);
   }
 
+  @ApiCreatedResponse({ type: Store })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        location: { type: 'string' },
+        city: { type: 'string' },
+        common: { type: 'string' },
+        status: { type: 'integer' },
+        image: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @ApiOperation({ summary: 'Create Store Inscription' })
+  @ApiOkResponse({ type: Store, description: ' Store Inscription' })
+  @ApiBadRequestResponse()
+  @Post()
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: Helper.destinationPath,
+        filename: Helper.customFileName,
+      }),
+    }),
+  )
+  createStoreInscription(
+    @Body() createStoreDto: CreateStoreDto,
+    @UploadedFile() file: Express.Multer.File,
+    @Req() req: Request,
+  ) {
+    createStoreDto.image = file.filename;
+    createStoreDto.image_url = `${req.protocol}://${req.get('Host')}/api/store${
+      file.path
+    }`;
+
+    return this.storeService.createStoreInscription(createStoreDto);
+  }
+
   @ApiOperation({ summary: 'Login Store' })
   @ApiOkResponse({ type: Store, description: 'Login store' })
   @Post('/login')
