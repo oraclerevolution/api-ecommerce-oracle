@@ -11,19 +11,23 @@ import { PictureModule } from './picture/picture.module';
 import { ColorsModule } from './colors/colors.module';
 import { ScentModule } from './scent/scent.module';
 import { PaymentModule } from './payment/payment.module';
+import { StoreInscriptionModule } from './store-inscription/store-inscription.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
-      type:"mysql",
-      host:"https://starmint-nft.com/",
-      //port:3306,
-      username: 'starmint0',
-      password: 'Prezer225',
-      database:"start",
-      autoLoadEntities: true,
-      synchronize: true,      
+      type:"postgres",
+      host:'localhost',
+      port: 5432,
+      username:"postgres",
+      password:'postgres',
+      database:"prezer",
+      autoLoadEntities:true,
+      migrations: [__dirname + '/migrations/*{.ts,.js}'],
+      migrationsTableName: 'typeorm_migrations',
+      migrationsRun: true,
+      synchronize: true,
     }),
 
     CategorieModule,
@@ -41,6 +45,8 @@ import { PaymentModule } from './payment/payment.module';
     ScentModule,
 
     PaymentModule,
+
+    StoreInscriptionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

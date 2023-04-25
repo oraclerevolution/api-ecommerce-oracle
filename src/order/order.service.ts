@@ -32,8 +32,15 @@ export class OrderService {
     private categorieService: CategorieService,
   ) {}
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
+    
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const length = 6;
+    let code = 'prezer_';
+    for (let i = 0; i < length; i++) {
+      code += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
     const newOrder = this.orderRepository.create({
-      code: Math.random().toString(36).substring(10),
+      code: code,
       // total_order: createOrderDto.total_order,
       status: createOrderDto.status,
       latitude: createOrderDto.latitude,
