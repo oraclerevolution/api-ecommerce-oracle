@@ -101,7 +101,7 @@ export class StoreController {
   @ApiOperation({ summary: 'Create Store Inscription' })
   @ApiOkResponse({ type: Store, description: ' Store Inscription' })
   @ApiBadRequestResponse()
-  @Post()
+  @Post('create-store')
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
