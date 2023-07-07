@@ -79,10 +79,10 @@ export class Store extends TimesTampEntities {
 
   @ApiProperty({
     type: Number,
-    default: 1,
+    default: 0,
   })
   @Column({
-    default: 1,
+    default: 0,
   })
   status: number;
 

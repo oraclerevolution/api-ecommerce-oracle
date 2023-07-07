@@ -123,6 +123,22 @@ export class StoreController {
     return this.storeService.createStoreInscription(createStoreDto);
   }
 
+  @ApiOperation({ summary: 'Validate Store' })
+  @ApiOkResponse({ type: Store, description: 'Validate store' })
+  @Post('/validate')
+  /**
+   * Validates the store inscription.
+   *
+   * @param {string} id - the ID of the store
+   * @return {unknown} the result of validating the store inscription
+   */
+  validateStore(
+    @Param('id') id: string
+  ){
+    console.log("id", id);
+    return this.storeService.validateStoreInscription(id);
+  }
+
   @ApiOperation({ summary: 'Login Store' })
   @ApiOkResponse({ type: Store, description: 'Login store' })
   @Post('/login')

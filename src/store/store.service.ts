@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -10,6 +11,7 @@ import { Repository } from 'typeorm';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
 import { Store } from './entities/store.entity';
+// import * as nodemail from "nodemailer"
 
 // import * as bcrypt from 'bcryptjs';
 
@@ -57,7 +59,7 @@ export class StoreService {
       city: createStoreDto.city,
       email: createStoreDto.email,
       common: createStoreDto.common,
-      status: 0,
+      status: createStoreDto.status,
       location: createStoreDto.location,
       telephone_number: createStoreDto.telephone_number,
       image: createStoreDto.image,
@@ -73,18 +75,50 @@ export class StoreService {
     }
   }
 
-  async validateStoreInscription(id:string): Promise<Store>{
+  async validateStoreInscription(id:string): Promise<any>{
+    // let mailMessage = ""
     const store = await this.storeRepository.findOne({
       where:{
         id
       }
     })
+    
     if(!store){
       throw new NotFoundException('')
     }
 
     store.status = 1
     await this.storeRepository.save(store)
+    
+    //send a mail after store validation
+    // const transporter = nodemail.createTransport({
+    //   host: 'smtp.gmail.com',
+    //   port: 465,
+    //   secure: true,
+    //   auth:{
+    //     user: process.env.GMAIL,
+    //     pass: process.env.GMAIL_PASSWORD
+    //   }
+    // })
+
+    // const emailText = `<h1>Votre boutique a été validé</h1><p>Merci d'avoir patienter le temps de vérification de votre boutique. Vous pouvez desormais vous connecter à l'appliation et commencer à vendre vos produits.</p><p>N'oubliez pas que prezer est une application de vente de produit a caractère sexuel tout autre produit peut impliqué la suspension ou la suppression de votre boutique, merci de bien relire notre <a>politique d'utilisations</a> de l'application Prezer.</p><p>Votre identifiant sont:</p><p>email: <b>${store.email}</b></p><p>Votre mot de passe est celui que vous avez utiliser lors de votre inscription</p><h3>L'équipe prezer</h3>`
+
+    // const mailOptions = {
+    //   from:"assistance@prezer.com",
+    //   to: store.email,
+    //   subject: "Validation de votre boutique",
+    //   text: emailText
+    // }
+
+    // transporter.sendMail(mailOptions, (err, info) => {
+    //   if(err){
+    //     mailMessage = "une erreur s'est produite lors de l'envoie du mail"
+    //     console.log("une erreur s'est produite lors de l'envoie du mail", err);
+    //   }else{
+    //     mailMessage = "E-mail envoyé avec succès"
+    //     console.log("E-mail envoyé avec succès", info.response);
+    //   }
+    // })
     return store
   }
 
