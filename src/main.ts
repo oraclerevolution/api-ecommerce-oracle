@@ -13,6 +13,6 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/api-ecommerce', app, document);
-  const server = await app.listen(process.env.PORT || 4600);
+  const server = await app.listen(4300 || 4300);
 }
 bootstrap();
