@@ -1,13 +1,15 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Categorie } from 'src/categorie/entities/categorie.entity';
 import { Color } from 'src/colors/entities/color.entity';
 import { Scent } from 'src/scent/entities/scent.entity';
 import { Store } from 'src/store/entities/store.entity';
 import { Product } from '../entities/product.entity';
+import { Type } from 'class-transformer';
 
 export class CreateProductDto {
-  @IsNotEmpty()
+  @IsOptional()
   code: string;
+
   @IsNotEmpty()
   @IsString()
   title: string;
@@ -17,11 +19,13 @@ export class CreateProductDto {
   description: string;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsInt()
+  @Type(() => Number)
   price: number;
 
   @IsOptional()
-  @IsNumber()
+  @IsInt()
+  @Type(() => Number)
   quantity: number;
 
   @IsOptional()
@@ -30,13 +34,13 @@ export class CreateProductDto {
   @IsOptional()
   status: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   categorie: Categorie;
 
   @IsNotEmpty()
   category_id: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   store: Store;
 
   @IsNotEmpty()
