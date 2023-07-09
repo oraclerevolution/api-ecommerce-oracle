@@ -41,7 +41,7 @@ export class OrderService {
     }
     const newOrder = this.orderRepository.create({
       code: code,
-      // total_order: createOrderDto.total_order,
+      total_order: createOrderDto.price,
       status: createOrderDto.status,
       latitude: createOrderDto.latitude,
       longitude: createOrderDto.longitude,
@@ -55,13 +55,13 @@ export class OrderService {
           p.product_id,
         );
 
-        if (p.scent_id != undefined || p.scent_id != '') {
-          this.scent = await this.productService.getOneScent(p.scent_id);
-        }
+        // if (p.scent_id != undefined || p.scent_id != '') {
+        //   this.scent = await this.productService.getOneScent(p.scent_id);
+        // }
 
-        if (p.color_id != undefined || p.color_id != '') {
-          this.color = await this.productService.getOneColor(p.color_id);
-        }
+        // if (p.color_id != undefined || p.color_id != '') {
+        //   this.color = await this.productService.getOneColor(p.color_id);
+        // }
         const category_id = product.category_id;
         const category: Categorie = await this.categorieService.findOne(
           category_id,
